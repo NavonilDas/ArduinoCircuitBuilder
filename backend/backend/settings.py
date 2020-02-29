@@ -31,6 +31,7 @@ ALLOWED_HOSTS = ["127.0.0.1","localhost", ]
 # Application definition
 
 INSTALLED_APPS = [
+    'api.apps.ApiConfig',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -83,6 +84,15 @@ CORS_ALLOW_HEADERS = (
 'x-csrftoken',
 'x-requested-with',
 'Access-Control-Allow-Origin',)
+
+REST_FRAMEWORK = {
+    'DEFAULT_AUTHENTICATION_CLASSES':(
+        'rest_framework.authentication.TokenAuthentication',
+    ),
+    'DEFAULT_PERMISSION_CLASSES':(
+        'rest_framework.permissions.IsAuthenticated',
+    )
+}
 
 TEMPLATES = [
     {
