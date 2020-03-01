@@ -4,6 +4,7 @@ declare var window;
 
 export class Led {
     id: number;
+    keyName: string = "Led";
     points: any[][] = [[0, 85], [0, 50], [50, 85]];
     tags: string[] = ["M", "L", "a25,25 180 0,1 50,0 L"];
     color: string = "#f00";

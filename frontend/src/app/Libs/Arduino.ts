@@ -4,6 +4,7 @@ declare var window;
 
 export class Arduino {
     id: number;
+    keyName: string = "Arduino";
     element: any;
     glowing: any;
     Nodes: Point[] = [];
@@ -67,8 +68,8 @@ export class Arduino {
         for (let i = 0; i < this.NodesCordinates.length; ++i) {
             let cord = this.NodesCordinates[i];
             this.Nodes.push(new Point(
-                this.canvas, this.x + cord[0], this.y + cord[1], this.pinLabesl[i],this
-                ));
+                this.canvas, this.x + cord[0], this.y + cord[1], this.pinLabesl[i], this
+            ));
         }
     }
     showNodes() {

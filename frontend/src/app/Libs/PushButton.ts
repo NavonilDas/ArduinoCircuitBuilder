@@ -8,6 +8,8 @@ export class PushButton {
     nodes: Point[];
     tmpx: number = 0;
     tmpy: number = 0;
+    keyName: string = "PushButton";
+
     constructor(private canvas: any, public x: number, public y: number) {
         this.id = window.scope["PushButton"].length;
         this.elements = [

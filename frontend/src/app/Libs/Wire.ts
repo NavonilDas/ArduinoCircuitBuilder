@@ -4,6 +4,7 @@ declare var window;
 
 export class Wire {
     id: number;
+    keyName: string = "wires";
     points: number[][] = [];
     value: number = -1;
     end: Point = null;
