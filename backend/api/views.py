@@ -18,7 +18,7 @@ class ProjectSave(APIView):
     def post(self, request):
         _mutable = request.data._mutable
         request.data._mutable = True
-        request.data['user_id'] = str(self.user.id)
+        request.data['user_id'] = str(self.request.user.id)
         request.data._mutable = _mutable
         serializer = ProjectSaveSerializer(data=request.data)
         if serializer.is_valid():

@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { WorkspaceComponent } from '../workspace/workspace.component';
+import { ApiService } from '../api.service';
 declare var window;
 
 @Component({
@@ -10,7 +11,7 @@ declare var window;
 })
 export class SimulatorComponent implements OnInit {
 
-  constructor(private activatedRoute: ActivatedRoute) { }
+  constructor(private activatedRoute: ActivatedRoute, private api: ApiService) { }
 
   ngOnInit() {
     this.activatedRoute.queryParams.subscribe(p => {
@@ -33,7 +34,7 @@ export class SimulatorComponent implements OnInit {
   loadProject() {
 
   }
-  saveProject(e: WorkspaceComponent) {
+  saveProject(e: WorkspaceComponent, project) {
     var saveObj = {};
     saveObj["canvas"] = e.save();
     for (let key in window.scope) {
@@ -43,6 +44,16 @@ export class SimulatorComponent implements OnInit {
       // console.log(elem.save());
     }
     console.log(JSON.stringify(saveObj));
+    var token = window.localStorage.getItem("Token");
+    if (token)
+      this.api.saveProject(project.value, JSON.stringify(saveObj), token).subscribe(v => {
+        if (v["done"])
+          alert("done");
+        else
+          alert("Not done");
+      });
+    else
+      window.location.href = '/login';
   }
   onFocusOut(evt) {
     let el = evt.target;

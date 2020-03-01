@@ -1,8 +1,8 @@
 <div>
   <div style="background: #fff;padding: 5px;">
-    <input type="text" name="title" value="Untitled" id="project_title" (focusout)="onFocusOut($event)">
+    <input #project_name type="text" name="title" value="Untitled" id="project_title" (focusout)="onFocusOut($event)">
     <button (click)="openProject()" class="btn">Open</button>
-    <button class="btn" (click)="saveProject(workspace)">Save</button>
+    <button class="btn" (click)="saveProject(workspace,project_name)">Save</button>
   </div>
   <div style="display: flex;position: absolute;top:50px;" onkeydown="return false;">
     <div>
