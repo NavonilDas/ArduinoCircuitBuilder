@@ -32,8 +32,8 @@ export class Led {
         this.leg_plus = this.canvas.path(`M${this.x + 14},${this.y + 85} L${this.x + 14},${this.y + 140}Z`);
         this.leg_neg = this.canvas.path(`M${this.x + 36},${this.y + 85} L${this.x + 36},${this.y + 140}Z`);
 
-        this.leg_p = new Point(this.canvas, this.x + 12, this.y + 138, "");
-        this.leg_n = new Point(this.canvas, this.x + 34, this.y + 138, "");
+        this.leg_p = new Point(this.canvas, this.x + 12, this.y + 138, "POSITIVE",this);
+        this.leg_n = new Point(this.canvas, this.x + 34, this.y + 138, "NEGATIVE",this);
 
 
         this.body.click(()=>{

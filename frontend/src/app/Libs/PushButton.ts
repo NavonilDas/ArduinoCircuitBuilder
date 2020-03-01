@@ -23,10 +23,10 @@ export class PushButton {
             this.canvas.circle(x + 30, y + 30, 12)
         ];
         this.nodes = [
-            new Point(canvas, x + 10, y - 20, "Terminal 1b"),
-            new Point(canvas, x + 45, y - 20, "Terminal 2b"),
-            new Point(canvas, x + 10, y + 80, "Terminal 1a"),
-            new Point(canvas, x + 45, y + 80, "Terminal 2a")
+            new Point(canvas, x + 10, y - 20, "Terminal 1b",this),
+            new Point(canvas, x + 45, y - 20, "Terminal 2b",this),
+            new Point(canvas, x + 10, y + 80, "Terminal 1a",this),
+            new Point(canvas, x + 45, y + 80, "Terminal 2a",this)
         ];
         for (let i = 0; i < 4; ++i)
             this.elements[i].attr({ stroke: "#737373", fill: "#737373" });

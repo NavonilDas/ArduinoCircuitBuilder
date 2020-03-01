@@ -28,8 +28,8 @@ export class Buzzer {
         this.inner = this.canvas.circle(x, y, 5);
         this.inner.attr({ fill: "#b07425", stroke: "#b07425" });
 
-        this.leg_p = new Point(canvas, x - 17, y + 48, "POSITIVE");
-        this.leg_n = new Point(canvas, x + 13, y + 48, "NEGATIVE");
+        this.leg_p = new Point(canvas, x - 17, y + 48, "POSITIVE",this);
+        this.leg_n = new Point(canvas, x + 13, y + 48, "NEGATIVE",this);
 
         this.outer.drag((dx, dy) => {
             this.outer.attr({ cx: this.x + dx, cy: this.y + dy });

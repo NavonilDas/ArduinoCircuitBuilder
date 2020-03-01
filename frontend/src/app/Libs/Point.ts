@@ -15,7 +15,8 @@ export class Point {
         private canvas: any,
         public x: number,
         public y: number,
-        public label: string
+        public label: string,
+        public parent: any
     ) {
 
         this.element = this.canvas.rect(x, y, 4, 4);
@@ -32,15 +33,15 @@ export class Point {
         this.element.mouseout(() => {
             this.canvas.hidePopup();
         });
-        this.element.click(()=>{
-            if(!window["isSelected"]){
+        this.element.click(() => {
+            if (!window["isSelected"]) {
                 window["isSelected"] = true;
-                var tmp = new Wire(this.canvas,this)
+                var tmp = new Wire(this.canvas, this)
                 window["Selected"] = tmp;
                 window["scope"]["wires"].push(tmp);
             }
-            else if(window["isSelected"] && (window["Selected"] instanceof Wire)){
-                window["Selected"].connect(this,true);
+            else if (window["isSelected"] && (window["Selected"] instanceof Wire)) {
+                window["Selected"].connect(this, true);
                 window["isSelected"] = false;
             }
         });
@@ -53,7 +54,7 @@ export class Point {
         }, () => {
             this.x = this.element.attr("x");
             this.y = this.element.attr("y");
-        }, () => {});
+        }, () => { });
         this.element.dblclick(() => {
             alert(this.x + "," + this.y + "   " + this.label);
         });
@@ -83,7 +84,7 @@ export class Point {
             y: this.y
         });
     }
-    position(){
-        return [this.x+2,this.y+2];
+    position() {
+        return [this.x + 2, this.y + 2];
     }
 }

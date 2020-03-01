@@ -66,7 +66,9 @@ export class Arduino {
 
         for (let i = 0; i < this.NodesCordinates.length; ++i) {
             let cord = this.NodesCordinates[i];
-            this.Nodes.push(new Point(this.canvas, this.x + cord[0], this.y + cord[1], this.pinLabesl[i]));
+            this.Nodes.push(new Point(
+                this.canvas, this.x + cord[0], this.y + cord[1], this.pinLabesl[i],this
+                ));
         }
     }
     showNodes() {
