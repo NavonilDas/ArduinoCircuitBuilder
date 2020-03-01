@@ -1,5 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
+import { WorkspaceComponent } from '../workspace/workspace.component';
+declare var window;
+
 @Component({
   selector: 'app-simulator',
   templateUrl: './simulator.component.html',
@@ -23,12 +26,23 @@ export class SimulatorComponent implements OnInit {
   openProject() {
     window.location.href = '/open';
   }
-  onDrag(eve, x) {
+  test(eve, x) {
     eve.dataTransfer.setData("text", x);
     eve.dataTransfer.effectAllowed = "copyMove";
   }
-  saveProject(e) {
-    console.log(e);
+  loadProject() {
+
+  }
+  saveProject(e: WorkspaceComponent) {
+    var saveObj = {};
+    saveObj["canvas"] = e.save();
+    for (let key in window.scope) {
+      saveObj[key] = [];
+      for (let elem of window.scope[key])
+        saveObj[key].push(elem.save());
+      // console.log(elem.save());
+    }
+    console.log(JSON.stringify(saveObj));
   }
   onFocusOut(evt) {
     let el = evt.target;

@@ -1,0 +1,52 @@
+#bubblebox {
+	position: absolute;
+    background: #000;
+    padding: 10px;
+    color: #fff;
+    border-radius: .4em;
+    z-index: 100;
+    display: none;
+}
+
+#bubblebox:after {
+	content: '';
+	position: absolute;
+	top: 0;
+	left: 50%;
+	width: 0;
+	height: 0;
+	border: 10px solid transparent;
+    border-bottom-color: #000;
+    border-top: 0;
+    margin-left: -10px;
+    margin-top: -10px;
+}
+
+.support-buttons{
+    position: fixed;
+    top:50px;
+    right:calc(100vw - 1100px);
+    display: flex;
+    z-index: 100;
+}
+.support-buttons div{
+    margin-right: 10px;
+    width: 40px;
+    height: 40px;
+    padding: 4px;
+    border: 1px solid gray;
+    border-radius: 25px;
+    background: #fff;
+    cursor: pointer;
+}
+.support-buttons div:hover{
+    border: 2px solid gray;
+}
+
+.support-buttons div img{
+    max-width: 100%;
+}
+
+.active-btn{
+    border:2px solid greenyellow !important;
+}

@@ -1,3 +1,8 @@
-<p>
-  workspace works!
-</p>
+<div id="holder" style="overflow: scroll;width: 1200px;height: 100vh;"></div>
+<div id="bubblebox">Hello</div>
+<div class="support-buttons">
+    <div #holdbtn (click)="holdClick(holdbtn)"><img src="assets/icons/hold.png"></div>
+    <div (click)="delete()"><img src="assets/icons/delete.png"></div>
+    <div (click)="zoomout()"><img src="assets/icons/zoomin.png"></div>
+    <div (click)="zoomin()"><img src="assets/icons/zoomout.png"></div>
+</div>
