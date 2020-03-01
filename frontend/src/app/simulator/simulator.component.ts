@@ -10,13 +10,14 @@ declare var window;
   styleUrls: ['./simulator.component.css']
 })
 export class SimulatorComponent implements OnInit {
-
+  projectId: number = -1;
   constructor(private activatedRoute: ActivatedRoute, private api: ApiService) { }
 
   ngOnInit() {
     this.activatedRoute.queryParams.subscribe(p => {
-      console.log(p);
-    })
+      if (p.project)
+        this.projectId = p.project;
+    });
   }
   components: any[] = [
     { name: "Arduino", obj: "Arduino", img: "arduino.JPG" },
@@ -43,7 +44,7 @@ export class SimulatorComponent implements OnInit {
         saveObj[key].push(elem.save());
       // console.log(elem.save());
     }
-    console.log(JSON.stringify(saveObj));
+    // console.log(JSON.stringify(saveObj));
     var token = window.localStorage.getItem("Token");
     if (token)
       this.api.saveProject(project.value, JSON.stringify(saveObj), token).subscribe(v => {

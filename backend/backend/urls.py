@@ -27,5 +27,6 @@ urlpatterns = [
     path('apiauth/', include('rest_framework.urls')),
     path('admin/', admin.site.urls),
     path('save', views.ProjectSave.as_view(),name="ProjectSave"),
+    path('update', views.ProjectUpdate.as_view(),name="ProjectUpdate"),
     path('api-auth-token',authviews.obtain_auth_token,name='api-auth-token')
 ]
