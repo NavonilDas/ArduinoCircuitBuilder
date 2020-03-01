@@ -1,3 +1,4 @@
+import { Wire } from './Wire';
 
 // Class to Draw a Node on Circuit Element
 export class Point {
@@ -30,6 +31,18 @@ export class Point {
         });
         this.element.mouseout(() => {
             this.canvas.hidePopup();
+        });
+        this.element.click(()=>{
+            if(!window["isSelected"]){
+                window["isSelected"] = true;
+                var tmp = new Wire(this.canvas,this)
+                window["Selected"] = tmp;
+                window["scope"]["wires"].push(tmp);
+            }
+            else if(window["isSelected"] && (window["Selected"] instanceof Wire)){
+                window["Selected"].connect(this,true);
+                window["isSelected"] = false;
+            }
         });
         // TODO: Remove The following code After Development
         this.element.drag((dx, dy) => {
