@@ -10,7 +10,7 @@ export class SimulatorComponent implements OnInit {
   constructor(private activatedRoute: ActivatedRoute) { }
 
   ngOnInit() {
-    this.activatedRoute.queryParams.subscribe(p =>{
+    this.activatedRoute.queryParams.subscribe(p => {
       console.log(p);
     })
   }
@@ -27,7 +27,12 @@ export class SimulatorComponent implements OnInit {
     eve.dataTransfer.setData("text", x);
     eve.dataTransfer.effectAllowed = "copyMove";
   }
-  saveProject(){
-
+  saveProject(e) {
+    console.log(e);
+  }
+  onFocusOut(evt) {
+    let el = evt.target;
+    if (el.value == "")
+      el.value = "Untitled";
   }
 }

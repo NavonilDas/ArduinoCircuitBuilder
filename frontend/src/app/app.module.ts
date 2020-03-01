@@ -8,13 +8,15 @@ import { AppComponent } from './app.component';
 import { LoginComponent } from './login/login.component';
 import { ProjectComponent } from './project/project.component';
 import { SimulatorComponent } from './simulator/simulator.component';
+import { WorkspaceComponent } from './workspace/workspace.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     LoginComponent,
     ProjectComponent,
-    SimulatorComponent
+    SimulatorComponent,
+    WorkspaceComponent
   ],
   imports: [
     BrowserModule,

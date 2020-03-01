@@ -1,11 +1,12 @@
 <div>
-  <div>
-    <input type="text" name="title" value="Untitled">
-    <button (click)="openProject()">Open</button>
-    <button>Save</button>
+  <div style="background: #fff;padding: 5px;">
+    <input type="text" name="title" value="Untitled" id="project_title" (focusout)="onFocusOut($event)">
+    <button (click)="openProject()" class="btn">Open</button>
+    <button class="btn" (click)="saveProject(workspace)">Save</button>
   </div>
-  <div style="display: flex;"  onkeydown="return false;">
+  <div style="display: flex;" onkeydown="return false;">
     <div>
+      <app-workspace #workspace></app-workspace>
     </div>
     <div class="side-toolbox" style="width: 100%;">
       <label style="text-align: center;width: 100%;font-size: 1.5em;">Components</label>
