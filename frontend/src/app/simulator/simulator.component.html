@@ -4,7 +4,7 @@
     <button (click)="openProject()" class="btn">Open</button>
     <button class="btn" (click)="saveProject(workspace)">Save</button>
   </div>
-  <div style="display: flex;" onkeydown="return false;">
+  <div style="display: flex;position: absolute;top:50px;" onkeydown="return false;">
     <div>
       <app-workspace #workspace></app-workspace>
     </div>

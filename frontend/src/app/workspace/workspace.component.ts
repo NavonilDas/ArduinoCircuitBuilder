@@ -104,6 +104,15 @@ export class WorkspaceComponent implements OnInit {
     this.UpdateScale();
   }
 
+  relativePos(event) {
+    event.preventDefault();
+    // var el = event.target.getBoundingClientRect();
+    // console.log(el.top);
+    return {
+      clientX: event.clientX - 0,
+      clientY: event.clientY - 50
+    };
+  }
   @HostListener('mousewheel', ['$event']) onMousewheel(event) {
     event.preventDefault();
     if (event.deltaY < 0)
@@ -118,8 +127,9 @@ export class WorkspaceComponent implements OnInit {
       }
     }
   }
-  @HostListener('mousedown', ['$event']) onMouseDown(event: MouseEvent) {
-    event.preventDefault();
+  @HostListener('mousedown', ['$event']) onMouseDown(evt: MouseEvent) {
+    let event = this.relativePos(evt);
+    
     if (this.hold_clicked) {
       this.hold = true;
       this.tmpx = event.clientX;
@@ -134,23 +144,23 @@ export class WorkspaceComponent implements OnInit {
       window["isSelected"] = false;
     }
   }
-  @HostListener('mouseup', ['$event']) onMouseUp(event: MouseEvent) {
-    event.preventDefault();
+  @HostListener('mouseup', ['$event']) onMouseUp(evt: MouseEvent) {
+    let event = this.relativePos(evt);
     if (this.hold) {
       this.hold = false;
       this.x -= (event.clientX - this.tmpx);
       this.y -= (event.clientY - this.tmpy);
     }
   }
-  @HostListener('mousemove', ['$event']) onMouseMove(event: MouseEvent) {
-    event.preventDefault();
+  @HostListener('mousemove', ['$event']) onMouseMove(evt: any) {
+    let event = this.relativePos(evt);
     if (this.hold) {
       this.view_x = this.x - (event.clientX - this.tmpx);
       this.view_y = this.y - (event.clientY - this.tmpy);
       this.canvas.setViewBox(this.view_x, this.view_y, this.sx, this.sy, false);
     }
     if (window["isSelected"] && (window["Selected"] instanceof Wire)) {
-      window.Selected.draw(event.clientX + 5, event.clientY + 5, this.scale);
+      window.Selected.draw(event.clientX + 4, event.clientY + 4, this.scale);
     }
     this.UpdateWires();
   }
