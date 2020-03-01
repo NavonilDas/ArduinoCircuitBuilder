@@ -49,4 +49,14 @@ export class ApiService {
     data.append("saved", saved);
     return this.http.post(`${this.url}update`, data, httpOptions);
   }
+  getProject(projectId:number,token:string){
+    let httpOptions = {
+      headers: new HttpHeaders({
+        'Content-Type': 'application/json',
+        'Authorization': `Token ${token}`,
+        'Access-Control-Allow-Origin': '*',
+      })
+    };
+    return this.http.get(`${this.url}project?id=${projectId}`, httpOptions);
+  }
 }

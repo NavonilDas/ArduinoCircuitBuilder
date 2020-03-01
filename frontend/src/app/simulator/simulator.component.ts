@@ -15,8 +15,10 @@ export class SimulatorComponent implements OnInit {
 
   ngOnInit() {
     this.activatedRoute.queryParams.subscribe(p => {
-      if (p.project)
+      if (p.project) {
         this.projectId = p.project;
+        this.loadProject();
+      }
     });
   }
   components: any[] = [
@@ -33,7 +35,11 @@ export class SimulatorComponent implements OnInit {
     eve.dataTransfer.effectAllowed = "copyMove";
   }
   loadProject() {
-
+    var token = window.localStorage.getItem("Token");
+    this.api.getProject(this.projectId, token).subscribe(v => {
+      console.log(v);
+      console.log(JSON.parse(v["data"]))
+    });
   }
   saveProject(e: WorkspaceComponent, project) {
     var saveObj = {};
@@ -42,9 +48,7 @@ export class SimulatorComponent implements OnInit {
       saveObj[key] = [];
       for (let elem of window.scope[key])
         saveObj[key].push(elem.save());
-      // console.log(elem.save());
     }
-    // console.log(JSON.stringify(saveObj));
     var token = window.localStorage.getItem("Token");
     if (token) {
       if (this.projectId === -1)

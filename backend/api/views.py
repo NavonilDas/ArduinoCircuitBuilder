@@ -10,8 +10,24 @@ class ProjectsListViewSet(viewsets.ModelViewSet):
     serializer_class = ProjectSerializer
 
     def get_queryset(self):
-        print("This one")
         return Project.objects.filter(user_id=self.request.user.id)
+
+
+class ProjectsViewSet(APIView):
+    def get(self, request):
+        pid = request.GET.get("id", -1)
+        if pid == -1:
+            return Response({'found': False})
+        else:
+            try:
+                print(pid)
+                obj = Project.objects.get(id=pid)
+                return Response({
+                    "title": obj.name,
+                    "data": obj.saved
+                })
+            except:
+                return Response({'found': False})
 
 
 class ProjectSave(APIView):
