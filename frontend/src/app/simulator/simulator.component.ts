@@ -46,13 +46,23 @@ export class SimulatorComponent implements OnInit {
     }
     // console.log(JSON.stringify(saveObj));
     var token = window.localStorage.getItem("Token");
-    if (token)
-      this.api.saveProject(project.value, JSON.stringify(saveObj), token).subscribe(v => {
-        if (v["done"])
-          alert("done");
-        else
-          alert("Not done");
-      });
+    if (token) {
+      if (this.projectId === -1)
+        this.api.saveProject(project.value, JSON.stringify(saveObj), token).subscribe(v => {
+          if (v["done"])
+            alert("done");
+          else
+            alert("Not done");
+        });
+      else {
+        this.api.updateProject(this.projectId + '', project.value, JSON.stringify(saveObj), token).subscribe(v => {
+          if (v["done"])
+            alert("done");
+          else
+            alert("Not done");
+        });
+      }
+    }
     else
       window.location.href = '/login';
   }

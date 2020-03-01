@@ -36,4 +36,17 @@ export class ApiService {
     data.append("saved", saved);
     return this.http.post(`${this.url}save`, data, httpOptions);
   }
+  updateProject(projectId: string, name: string, saved: string, token: string) {
+    let httpOptions = {
+      headers: new HttpHeaders({
+        'Authorization': `Token ${token}`,
+        'Access-Control-Allow-Origin': '*',
+      })
+    };
+    let data = new FormData();
+    data.append("id", projectId);
+    data.append("name", name);
+    data.append("saved", saved);
+    return this.http.post(`${this.url}update`, data, httpOptions);
+  }
 }
