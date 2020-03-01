@@ -82,7 +82,17 @@ export class Wire {
         console.log("called");
     }
     save() {
-
+        return {
+            points:this.points,
+            start:{
+                id:this.start.parent.id,
+                keyName:this.start.parent.keyName
+            },
+            end:{
+                id:this.end.parent.id,
+                keyName:this.end.parent.keyName
+            }
+        };
     }
     load() {
     }
