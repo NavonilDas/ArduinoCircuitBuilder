@@ -1,0 +1,21 @@
+<div>
+  <div>
+    <input type="text" name="title" value="Untitled">
+    <button (click)="openProject()">Open</button>
+    <button>Save</button>
+  </div>
+  <div style="display: flex;"  onkeydown="return false;">
+    <div>
+    </div>
+    <div class="side-toolbox" style="width: 100%;">
+      <label style="text-align: center;width: 100%;font-size: 1.5em;">Components</label>
+      <div class="toolbox" draggable="true">
+        <div *ngFor="let component of components">
+          <img src="../assets/images/{{component.img}}" draggable="true" (dragstart)="onDrag($event,component.obj)">
+          {{component.name}}
+        </div>
+      </div>
+    </div>
+  </div>
+
+</div>
