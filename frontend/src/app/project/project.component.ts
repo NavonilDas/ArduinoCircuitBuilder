@@ -10,7 +10,7 @@ import { Router } from '@angular/router';
 export class ProjectComponent implements OnInit {
 
   constructor(private api: ApiService, private router: Router) { }
-  items:any[] = [];
+  items: any[] = [];
   ngOnInit() {
     var token = window.localStorage.getItem("Token");
     if (token)
@@ -21,5 +21,9 @@ export class ProjectComponent implements OnInit {
       this.router.navigate(["/login"]);
     }
   }
-
+  getQuery(item:any) {
+    return {
+      project: `${item.id}`
+    };
+  }
 }

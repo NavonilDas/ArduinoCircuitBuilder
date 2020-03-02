@@ -27,9 +27,6 @@ export class SimulatorComponent implements OnInit {
     { name: "Push Button", obj: "PushButton", img: "pushButton.JPG" },
     { name: "LED", obj: "Led", img: "led.JPG" }
   ];
-  openProject() {
-    window.location.href = '/open';
-  }
   test(eve, x) {
     eve.dataTransfer.setData("text", x);
     eve.dataTransfer.effectAllowed = "copyMove";
