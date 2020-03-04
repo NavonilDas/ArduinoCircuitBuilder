@@ -1,4 +1,4 @@
-import { Component, OnInit, HostListener } from '@angular/core';
+import { Component, OnInit, HostListener, Input } from '@angular/core';
 import { Arduino } from 'src/app/Libs/Arduino';
 import { Wire } from 'src/app/Libs/Wire';
 import { Led } from 'src/app/Libs/Led';
@@ -37,7 +37,22 @@ export class WorkspaceComponent implements OnInit {
   tmpx: number;
   tmpy: number;
   scale: number = 1;
+  @Input() set canvasData(value: any) {
+    if (value) {
+      this.load(value.canvas);
+      console.log(value);
+      for (let key in value) {
+        // console.log(key)
+        if (key != "wires" && key != "canvas") {
+          for (let el of value[key]) {
+            this.loadElement(key, el);
+          }
+        }
 
+      }
+
+    }
+  }
 
   constructor() { }
 
@@ -67,19 +82,23 @@ export class WorkspaceComponent implements OnInit {
     evt.preventDefault();
     evt.stopPropagation();
   }
-
+  addCircuitElement(key: string, x: number, y: number) {
+    if (window.scope[key]) {
+      let tmp = new this.elements[key](this.canvas, x, y);
+      window.scope[key].push(tmp);
+      return tmp;
+    }
+    return null;
+  }
   @HostListener('drop', ['$event']) public ondrop(evt: DragEvent) {
     evt.preventDefault();
     evt.stopPropagation();
     var obj = evt.dataTransfer.getData("text");
-    if (window.scope[obj]) {
-      let tmp = new this.elements[obj](this.canvas, evt.clientX, evt.clientY);
-      window.scope[obj].push(tmp);
-    }
+    this.addCircuitElement(obj, evt.clientX, evt.clientY);
   }
   UpdateScale() {
     this.scale = Math.min(this.sx / this.width, this.sy / this.height);
-    this.canvas.setViewBox(this.x, this.y, this.sx, this.sy, false);
+    this.canvas.setViewBox(this.view_x, this.view_y, this.sx, this.sy, false);
     this.canvas.setSize(this.width, this.height);
   }
 
@@ -106,8 +125,6 @@ export class WorkspaceComponent implements OnInit {
 
   relativePos(event) {
     event.preventDefault();
-    // var el = event.target.getBoundingClientRect();
-    // console.log(el.top);
     return {
       clientX: event.clientX - 0,
       clientY: event.clientY - 50
@@ -129,7 +146,7 @@ export class WorkspaceComponent implements OnInit {
   }
   @HostListener('mousedown', ['$event']) onMouseDown(evt: MouseEvent) {
     let event = this.relativePos(evt);
-    
+
     if (this.hold_clicked) {
       this.hold = true;
       this.tmpx = event.clientX;
@@ -189,10 +206,28 @@ export class WorkspaceComponent implements OnInit {
       height: this.height,
       viewBox: {
         width: this.sx,
-        height: this.height,
+        height: this.sy,
         x: this.view_x,
         y: this.view_y
       }
     }
+  }
+  load(data: any) {
+    if (this.canvas == null || this.canvas == undefined) {
+      this.ngOnInit();
+    }
+    this.scale = data.scale;
+    this.width = data.width;
+    this.height = data.height;
+    this.sx = data.viewBox.width;
+    this.sy = data.viewBox.height;
+    this.view_x = data.viewBox.x;
+    this.view_y = data.viewBox.y;
+    this.UpdateScale();
+  }
+  loadElement(key: string, data: any) {
+    let obj = this.addCircuitElement(key, data.x, data.y);
+    if (obj.load)
+      obj.load(data);
   }
 }

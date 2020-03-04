@@ -56,6 +56,11 @@ export class Buzzer {
             id: this.id
         };
     }
+    load(data){
+        this.x = data.x;
+        this.y = data.y;
+        this.id = data.id;
+    }
     // returns node pointer on basis of x,y position
     getNode(x: number, y: number) {
 

@@ -11,6 +11,9 @@ declare var window;
 })
 export class SimulatorComponent implements OnInit {
   projectId: number = -1;
+  loadCanvas: any = null;
+  title:string = "Untitled";
+
   constructor(private activatedRoute: ActivatedRoute, private api: ApiService) { }
 
   ngOnInit() {
@@ -33,9 +36,12 @@ export class SimulatorComponent implements OnInit {
   }
   loadProject() {
     var token = window.localStorage.getItem("Token");
-    this.api.getProject(this.projectId, token).subscribe(v => {
-      console.log(v);
-      console.log(JSON.parse(v["data"]))
+    this.api.getProject(this.projectId, token).subscribe((v:any) => {
+      //Update title
+      this.title = v.title;
+      // Update canvas and add Circuit Elements
+      this.loadCanvas = JSON.parse(v["data"]);
+      // console.log(v);
     });
   }
   saveProject(e: WorkspaceComponent, project) {

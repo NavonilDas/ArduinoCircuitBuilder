@@ -1,12 +1,12 @@
 <div>
   <div style="background: #fff;padding: 5px;">
-    <input #project_name type="text" name="title" value="Untitled" id="project_title" (focusout)="onFocusOut($event)">
+    <input #project_name type="text" name="title" value={{title}} id="project_title" (focusout)="onFocusOut($event)">
     <button  routerLink="/open" class="btn">Open</button>
     <button class="btn" (click)="saveProject(workspace,project_name)">Save</button>
   </div>
   <div style="display: flex;position: absolute;top:50px;" onkeydown="return false;">
     <div>
-      <app-workspace #workspace></app-workspace>
+      <app-workspace #workspace [canvasData]="loadCanvas"></app-workspace>
     </div>
     <div class="side-toolbox" style="width: 100%;">
       <label style="text-align: center;width: 100%;font-size: 1.5em;">Components</label>

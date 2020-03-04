@@ -9,6 +9,8 @@ export class Wire {
     value: number = -1;
     end: Point = null;
     element: any;
+    color:any = "#000";
+
     constructor(public canvas, public start: Point) {
         this.id = window.scope["wires"].length;
         this.points.push(start.position());
@@ -84,6 +86,7 @@ export class Wire {
     save() {
         return {
             points:this.points,
+            color:this.color,
             start:{
                 id:this.start.parent.id,
                 keyName:this.start.parent.keyName
@@ -94,7 +97,9 @@ export class Wire {
             }
         };
     }
-    load() {
+    load(data) {
+        this.color = data.color;
+        this.points = data.points;
     }
     remove() {
         this.element.remove();

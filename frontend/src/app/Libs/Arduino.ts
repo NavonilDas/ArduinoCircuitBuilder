@@ -102,6 +102,13 @@ export class Arduino {
             id: this.id
         };
     }
+    load(data){
+        this.x = data.x;
+        this.y = data.y;
+        this.id = data.id;
+        this.element = this.canvas.image("assets/images/ArduinoUno.svg", this.x, this.y, 228, 167);
+        this.draw();
+    }
     // returns node pointer on basis of x,y position
     getNode(x: number, y: number) {
 
