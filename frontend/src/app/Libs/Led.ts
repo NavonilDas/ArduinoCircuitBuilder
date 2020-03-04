@@ -61,6 +61,8 @@ export class Led {
             this.x = this.tmpx;
             this.y = this.tmpy;
         }, () => {
+            this.x = this.tmpx;
+            this.y = this.tmpy;
         });
     }
     setColor(color: string) {

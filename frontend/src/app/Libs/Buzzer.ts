@@ -47,7 +47,10 @@ export class Buzzer {
         }, () => {
             this.x = this.tmpx;
             this.y = this.tmpy;
-        }, () => { });
+        }, () => {
+            this.x = this.tmpx;
+            this.y = this.tmpy;
+        });
     }
     save() {
         return {
@@ -56,7 +59,7 @@ export class Buzzer {
             id: this.id
         };
     }
-    load(data){
+    load(data) {
         this.x = data.x;
         this.y = data.y;
         this.id = data.id;

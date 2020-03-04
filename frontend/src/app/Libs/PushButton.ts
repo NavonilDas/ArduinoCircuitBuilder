@@ -65,6 +65,10 @@ export class PushButton {
                 this.tmpx = 0;
                 this.tmpy = 0;
             }, () => {
+                /// UPDATE x,y
+                let attr = this.elements[0].attr();
+                this.x = attr.x - 10;
+                this.y = attr.y + 20;
             });
 
 
