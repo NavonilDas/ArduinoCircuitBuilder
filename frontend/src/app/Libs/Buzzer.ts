@@ -59,7 +59,7 @@ export class Buzzer {
             id: this.id
         };
     }
-    load(data) {
+    load(data:any) {
         this.x = data.x;
         this.y = data.y;
         this.id = data.id;

@@ -40,7 +40,6 @@ export class WorkspaceComponent implements OnInit {
   @Input() set canvasData(value: any) {
     if (value) {
       this.load(value.canvas);
-      console.log(value);
       for (let key in value) {
         // console.log(key)
         if (key != "wires" && key != "canvas") {
@@ -50,7 +49,7 @@ export class WorkspaceComponent implements OnInit {
         }
 
       }
-
+      this.loadWires(value.wires);
     }
   }
 
@@ -71,7 +70,7 @@ export class WorkspaceComponent implements OnInit {
     }
     this.canvas = Raphael("holder", this.width, this.height);
   }
-
+  /************************** Section For Event Listener ***********************************/
 
   @HostListener('dragover', ['$event']) onDragOver(evt) {
     evt.preventDefault();
@@ -82,6 +81,76 @@ export class WorkspaceComponent implements OnInit {
     evt.preventDefault();
     evt.stopPropagation();
   }
+
+  @HostListener('drop', ['$event']) public ondrop(evt: DragEvent) {
+    evt.preventDefault();
+    evt.stopPropagation();
+    var obj = evt.dataTransfer.getData("text");
+    this.addCircuitElement(obj, evt.clientX, evt.clientY);
+  }
+
+  @HostListener('mousewheel', ['$event']) onMousewheel(event) {
+    event.preventDefault();
+    if (event.deltaY < 0)
+      this.zoomout();
+    else
+      this.zoomin();
+  }
+
+  @HostListener('mousedown', ['$event']) onMouseDown(evt: MouseEvent) {
+    let event = this.relativePos(evt);
+
+    if (this.hold_clicked) {
+      this.hold = true;
+      this.tmpx = event.clientX;
+      this.tmpy = event.clientY;
+    }
+    if (window["isSelected"] && (window["Selected"] instanceof Wire)) {
+      if (window.Selected.end == null)
+        window.Selected.add(event.clientX, event.clientY, this.scale);
+    } else {
+      if (window["Selected"] && window["Selected"].deselect)
+        window["Selected"].deselect();
+      window["isSelected"] = false;
+    }
+  }
+
+  @HostListener('mouseup', ['$event']) onMouseUp(evt: MouseEvent) {
+    let event = this.relativePos(evt);
+    if (this.hold) {
+      this.hold = false;
+      this.x -= (event.clientX - this.tmpx);
+      this.y -= (event.clientY - this.tmpy);
+    }
+  }
+
+  @HostListener('mousemove', ['$event']) onMouseMove(evt: any) {
+    let event = this.relativePos(evt);
+    if (this.hold) {
+      this.view_x = this.x - (event.clientX - this.tmpx);
+      this.view_y = this.y - (event.clientY - this.tmpy);
+      this.canvas.setViewBox(this.view_x, this.view_y, this.sx, this.sy, false);
+    }
+    if (window["isSelected"] && (window["Selected"] instanceof Wire)) {
+      window.Selected.draw(event.clientX + 4, event.clientY + 4, this.scale);
+    }
+    this.UpdateWires();
+  }
+  /**
+   * Event Listener called when user press right mouse button 
+   * @param event Event
+   */
+  @HostListener('contextmenu', ['$event']) onContextMenu(event) {
+    // Disable Context
+    return false;
+  }
+
+  /**
+   * Adds Circuit Element to the canvas
+   * @param key Elements Key name
+   * @param x X Position
+   * @param y Y Position
+   */
   addCircuitElement(key: string, x: number, y: number) {
     if (window.scope[key]) {
       let tmp = new this.elements[key](this.canvas, x, y);
@@ -90,12 +159,9 @@ export class WorkspaceComponent implements OnInit {
     }
     return null;
   }
-  @HostListener('drop', ['$event']) public ondrop(evt: DragEvent) {
-    evt.preventDefault();
-    evt.stopPropagation();
-    var obj = evt.dataTransfer.getData("text");
-    this.addCircuitElement(obj, evt.clientX, evt.clientY);
-  }
+  /**
+   * Updates Canvas(SVG) ie. Update Viewbox,Width,Height,scale
+   */
   UpdateScale() {
     this.scale = Math.min(this.sx / this.width, this.sy / this.height);
     this.canvas.setViewBox(this.view_x, this.view_y, this.sx, this.sy, false);
@@ -130,13 +196,7 @@ export class WorkspaceComponent implements OnInit {
       clientY: event.clientY - 50
     };
   }
-  @HostListener('mousewheel', ['$event']) onMousewheel(event) {
-    event.preventDefault();
-    if (event.deltaY < 0)
-      this.zoomout();
-    else
-      this.zoomin();
-  }
+
   UpdateWires() {
     if (window["scope"]["wires"]) {
       for (var z of window["scope"]["wires"]) {
@@ -144,51 +204,13 @@ export class WorkspaceComponent implements OnInit {
       }
     }
   }
-  @HostListener('mousedown', ['$event']) onMouseDown(evt: MouseEvent) {
-    let event = this.relativePos(evt);
 
-    if (this.hold_clicked) {
-      this.hold = true;
-      this.tmpx = event.clientX;
-      this.tmpy = event.clientY;
-    }
-    if (window["isSelected"] && (window["Selected"] instanceof Wire)) {
-      if (window.Selected.end == null)
-        window.Selected.add(event.clientX, event.clientY, this.scale);
-    } else {
-      if (window["Selected"] && window["Selected"].deselect)
-        window["Selected"].deselect();
-      window["isSelected"] = false;
-    }
-  }
-  @HostListener('mouseup', ['$event']) onMouseUp(evt: MouseEvent) {
-    let event = this.relativePos(evt);
-    if (this.hold) {
-      this.hold = false;
-      this.x -= (event.clientX - this.tmpx);
-      this.y -= (event.clientY - this.tmpy);
-    }
-  }
-  @HostListener('mousemove', ['$event']) onMouseMove(evt: any) {
-    let event = this.relativePos(evt);
-    if (this.hold) {
-      this.view_x = this.x - (event.clientX - this.tmpx);
-      this.view_y = this.y - (event.clientY - this.tmpy);
-      this.canvas.setViewBox(this.view_x, this.view_y, this.sx, this.sy, false);
-    }
-    if (window["isSelected"] && (window["Selected"] instanceof Wire)) {
-      window.Selected.draw(event.clientX + 4, event.clientY + 4, this.scale);
-    }
-    this.UpdateWires();
-  }
-  @HostListener('contextmenu', ['$event']) onContextMenu(event) {
-    return false;
-  }
   holdClick(e: HTMLElement) {
     e.classList.toggle('active-btn');
     console.log(e)
     this.hold_clicked = !this.hold_clicked;
   }
+
   delete() {
     if (window["Selected"]) {
       window["Selected"].remove();
@@ -199,6 +221,7 @@ export class WorkspaceComponent implements OnInit {
       window["Selected"] = null;
     }
   }
+
   save() {
     return {
       scale: this.scale,
@@ -212,6 +235,7 @@ export class WorkspaceComponent implements OnInit {
       }
     }
   }
+
   load(data: any) {
     if (this.canvas == null || this.canvas == undefined) {
       this.ngOnInit();
@@ -225,9 +249,30 @@ export class WorkspaceComponent implements OnInit {
     this.view_y = data.viewBox.y;
     this.UpdateScale();
   }
+
   loadElement(key: string, data: any) {
     let obj = this.addCircuitElement(key, data.x, data.y);
     if (obj.load)
       obj.load(data);
+  }
+
+  loadWires(wires:any[]){
+    for(let w of wires){
+      let start = null,end = null;
+      for(let st of window.scope[w.start.keyName]){
+        if(st.id == w.start.id){
+          start = st;
+          break;
+        }
+      }
+
+      for(let en of window.scope[w.end.keyName]){
+        if(en.id == w.end.id){
+          end = en;
+          break;
+        }
+      }
+      console.log([start.getNode(),end])
+    }
   }
 }

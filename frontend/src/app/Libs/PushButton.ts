@@ -80,6 +80,9 @@ export class PushButton {
             id: this.id
         };
     }
+    load(data){
+        this.id = data.id;
+    }
     // returns node pointer on basis of x,y position
     getNode(x: number, y: number) {
 
