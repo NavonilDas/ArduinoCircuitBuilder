@@ -20,4 +20,23 @@ export class UiService {
     var el = document.getElementById('loading-anim');
     el.style.display = "none";
   }
+
+  addProperty(key:string,id:string,elem:any){
+    var body = document.getElementById("properties-box");
+    if(body.getAttribute("name") == key && body.getAttribute("uid") == id) return;
+    body.setAttribute("name",key);
+    body.setAttribute("uid",id);
+    body.style.display = "block";
+    // Clear Body
+    while(body.childNodes.length > 1){
+      body.removeChild(body.lastChild);
+    }
+    body.append(elem);
+  }
+  hideProperty(){
+    var body = document.getElementById("properties-box");
+    body.style.display = "none";
+    body.setAttribute("name","null");
+    body.setAttribute("uid","-1");
+  }
 }

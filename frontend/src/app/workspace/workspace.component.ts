@@ -111,7 +111,8 @@ export class WorkspaceComponent implements OnInit {
     } else {
       if (window["Selected"] && window["Selected"].deselect)
         window["Selected"].deselect();
-      window["isSelected"] = false;
+        window["isSelected"] = false;
+        window.hideProperties();
     }
   }
 
@@ -216,6 +217,9 @@ export class WorkspaceComponent implements OnInit {
       window["Selected"].remove();
       if (window["Selected"] instanceof Wire) {
         window.scope.wires.splice(window.Selected.id, 1);
+      } else {
+        let key = window["Selected"].keyName;
+        window.scope[key].splice(window["Selected"].id, 1);
       }
       window["isSelected"] = false;
       window["Selected"] = null;
@@ -280,7 +284,7 @@ export class WorkspaceComponent implements OnInit {
         console.log("called")
         window["scope"]["wires"].push(tmp);
         tmp.update();
-      }else{
+      } else {
         alert("Something went wrong")
       }
       console.log([start, end])

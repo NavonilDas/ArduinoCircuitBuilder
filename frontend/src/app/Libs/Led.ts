@@ -3,7 +3,7 @@ import { CircuitElement } from './CircuitElement';
 
 declare var window;
 
-export class Led extends CircuitElement{
+export class Led extends CircuitElement {
     id: number;
     points: any[][] = [[0, 85], [0, 50], [50, 85]];
     tags: string[] = ["M", "L", "a25,25 180 0,1 50,0 L"];
@@ -17,7 +17,9 @@ export class Led extends CircuitElement{
     tmpx: number;
     tmpy: number;
     gloWElement: any;
-
+    somefunc() {
+        alert("ss")
+    }
     constructor(private canvas: any, public x: number, public y: number) {
         super("Led");
         this.id = window.scope["Led"].length;
@@ -41,6 +43,17 @@ export class Led extends CircuitElement{
         this.body.click(() => {
             window["isSelected"] = true;
             window["Selected"] = this;
+
+            var x = document.createElement("button");
+            x.onclick = () => {
+                this.somefunc();
+            }
+            x.innerText = "Hello world";
+            if (window.showProperties) {
+                window.showProperties(() => {
+                    return this.properties();
+                })
+            }
         });
 
         this.body.drag((dx, dy) => {
@@ -66,6 +79,25 @@ export class Led extends CircuitElement{
             this.y = this.tmpy;
         });
     }
+    properties() {
+        let body = document.createElement('div');
+        body.innerHTML = "<h6>LED</h6><label>Color:</label><br>";
+        let select = document.createElement("select");
+        select.innerHTML = `<option>Red</option><option>Yellow</option><option>Blue</option><option>Green</option>`;
+        let colors = ["#ff0000", "#ffff00", "#2593fa", "#31c404"];
+        for (let i = 0; i < colors.length; ++i)
+            if (colors[i] == this.color)
+                select.selectedIndex = i;
+        select.onchange = () => {
+            this.setColor(colors[select.selectedIndex]);
+        }
+        body.append(select);
+        return {
+            key: this.keyName,
+            id: this.id,
+            elem: body
+        }
+    }
     setColor(color: string) {
         this.color = color;
         this.body.attr({ fill: this.color });
@@ -83,11 +115,13 @@ export class Led extends CircuitElement{
         return {
             x: this.x,
             y: this.y,
-            id: this.id
+            id: this.id,
+            color: this.color
         };
     }
     load(data: any) {
         this.id = data.id;
+        this.setColor(data.color);
     }
     // returns node pointer on basis of x,y position
     getNode(point: number[]) {

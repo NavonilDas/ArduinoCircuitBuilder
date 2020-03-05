@@ -1,8 +1,9 @@
 import { Point } from './Point';
+import { CircuitElement } from './CircuitElement';
 
 declare var window;
 
-export class Buzzer {
+export class Buzzer extends CircuitElement{
     leg_plus: any;
     leg_neg: any;
     leg_p: Point;
@@ -12,9 +13,9 @@ export class Buzzer {
     tmpx: number;
     tmpy: number;
     id: number;
-    keyName: string = "Buzzer";
 
     constructor(private canvas: any, public x: number, public y: number) {
+        super("Buzzer");
         this.id = window.scope["Buzzer"].length;
 
         this.tmpx = x;
@@ -31,6 +32,11 @@ export class Buzzer {
 
         this.leg_p = new Point(canvas, x - 17, y + 48, "POSITIVE", this);
         this.leg_n = new Point(canvas, x + 13, y + 48, "NEGATIVE", this);
+
+        this.outer.click(()=>{
+            window["isSelected"] = true;
+            window["Selected"] = this;
+        });
 
         this.outer.drag((dx, dy) => {
             this.outer.attr({ cx: this.x + dx, cy: this.y + dy });
@@ -51,6 +57,12 @@ export class Buzzer {
             this.x = this.tmpx;
             this.y = this.tmpy;
         });
+    }
+    remove(): void {
+        this.leg_neg.remove();
+        this.leg_plus.remove();
+        this.outer.remove();
+        this.inner.remove();
     }
     save() {
         return {

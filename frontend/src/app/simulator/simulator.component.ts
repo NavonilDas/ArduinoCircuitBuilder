@@ -24,6 +24,14 @@ export class SimulatorComponent implements OnInit {
   ) { }
 
   ngOnInit() {
+    window.showProperties = (callback)=>{
+      var tmp = callback();
+      this.ui.addProperty(tmp.key,tmp.id,tmp.elem);
+    }
+    window.hideProperties = ()=>{
+      this.ui.hideProperty();
+    }
+    
     this.activatedRoute.queryParams.subscribe(p => {
       if (p.project) {
         this.projectId = p.project;
@@ -52,6 +60,8 @@ export class SimulatorComponent implements OnInit {
   }
   newProject() {
     this.ui.showLoading();
+    window["isSelected"] = false;
+    window["Selected"] = null;
     this.loadCanvas = null;
     for (let key in window.scope) {
       window.scope[key] = [];

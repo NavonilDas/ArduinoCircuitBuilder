@@ -11,3 +11,7 @@ window.scope -> stores all the circuit elements
 - [ ] On Select Element Show Properties
 - [ ] Change Color of Wire
 - [ ] Custom Context Menu for Copy
+- [ ] Hide/Show Component Box
+- [ ] Testing
+- [ ] Add name on Circuit Elements
+- [ ] Text Label as Component
