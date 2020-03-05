@@ -110,8 +110,6 @@ export class Arduino {
     // returns node on basis of x,y position
     getNode(point:number[]):Point {
         for(let n of this.Nodes){
-            // console.table([point,n.position()])
-
             if(point[0] - 2 == n.x && point[1] - 2 == n.y)
                 return n;
         }

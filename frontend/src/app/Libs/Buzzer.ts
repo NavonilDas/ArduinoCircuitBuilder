@@ -59,14 +59,18 @@ export class Buzzer {
             id: this.id
         };
     }
-    load(data:any) {
+    load(data: any) {
         this.x = data.x;
         this.y = data.y;
         this.id = data.id;
     }
     // returns node pointer on basis of x,y position
-    getNode(x: number, y: number) {
-
+    getNode(point: number[]) {
+        if (this.leg_p.x == point[0] - 2 && this.leg_p.y == point[1] - 2)
+            return this.leg_p;
+        if (this.leg_n.x == point[0] - 2 && this.leg_n.y == point[1] - 2)
+            return this.leg_n;
+        return null;
     }
     // TODO: Play Music on Simulation
 }

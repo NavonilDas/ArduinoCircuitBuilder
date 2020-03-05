@@ -33,11 +33,11 @@ export class Led {
         this.leg_plus = this.canvas.path(`M${this.x + 14},${this.y + 85} L${this.x + 14},${this.y + 140}Z`);
         this.leg_neg = this.canvas.path(`M${this.x + 36},${this.y + 85} L${this.x + 36},${this.y + 140}Z`);
 
-        this.leg_p = new Point(this.canvas, this.x + 12, this.y + 138, "POSITIVE",this);
-        this.leg_n = new Point(this.canvas, this.x + 34, this.y + 138, "NEGATIVE",this);
+        this.leg_p = new Point(this.canvas, this.x + 12, this.y + 138, "POSITIVE", this);
+        this.leg_n = new Point(this.canvas, this.x + 34, this.y + 138, "NEGATIVE", this);
 
 
-        this.body.click(()=>{
+        this.body.click(() => {
             window["isSelected"] = true;
             window["Selected"] = this;
         });
@@ -85,12 +85,17 @@ export class Led {
             id: this.id
         };
     }
-    load(data:any){
+    load(data: any) {
         this.id = data.id;
     }
     // returns node pointer on basis of x,y position
-    getNode(point:any) {
-        return point
+    getNode(point: number[]) {
+        if (this.leg_p.x == point[0] - 2 && this.leg_p.y == point[1] - 2)
+            return this.leg_p;
+        if (this.leg_n.x == point[0] - 2 && this.leg_n.y == point[1] - 2)
+            return this.leg_n;
+
+        return null
     }
 }
 window["Led"] = Led;
