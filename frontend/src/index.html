@@ -1,5 +1,6 @@
 <!doctype html>
 <html lang="en">
+
 <head>
   <meta charset="utf-8">
   <title>Arduino Circuit</title>
@@ -10,16 +11,24 @@
   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
   <script src="assets/raphael.js"></script>
 </head>
+
 <body>
+
+  <div id="loading-anim"
+    style="display: none;position: fixed;z-index: 100;width: 100vw;height: 100vh;top:0;left: 0;">
+    <img src="../assets/images/loading.svg" style="margin:auto auto;" width="100px" height="100px">
+  </div>
+
   <app-root></app-root>
   <script>
     window.scope = {
-      wires:[],
-      Arduino:[],
-      Buzzer:[],
-      PushButton:[],
-      Led:[]
+      wires: [],
+      Arduino: [],
+      Buzzer: [],
+      PushButton: [],
+      Led: []
     }
   </script>
 </body>
+
 </html>

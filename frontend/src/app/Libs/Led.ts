@@ -1,10 +1,10 @@
 import { Point } from './Point';
+import { CircuitElement } from './CircuitElement';
 
 declare var window;
 
-export class Led {
+export class Led extends CircuitElement{
     id: number;
-    keyName: string = "Led";
     points: any[][] = [[0, 85], [0, 50], [50, 85]];
     tags: string[] = ["M", "L", "a25,25 180 0,1 50,0 L"];
     color: string = "#f00";
@@ -19,6 +19,7 @@ export class Led {
     gloWElement: any;
 
     constructor(private canvas: any, public x: number, public y: number) {
+        super("Led");
         this.id = window.scope["Led"].length;
         this.tmpx = this.x;
         this.tmpy = this.y;
@@ -94,7 +95,6 @@ export class Led {
             return this.leg_p;
         if (this.leg_n.x == point[0] - 2 && this.leg_n.y == point[1] - 2)
             return this.leg_n;
-
         return null
     }
 }

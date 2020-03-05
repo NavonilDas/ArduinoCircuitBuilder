@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { WorkspaceComponent } from '../workspace/workspace.component';
 import { ApiService } from '../api.service';
+import { UiService } from '../ui.service';
 declare var window;
 
 @Component({
@@ -18,7 +19,8 @@ export class SimulatorComponent implements OnInit {
   constructor(
     private activatedRoute: ActivatedRoute,
     private api: ApiService,
-    private router: Router
+    private router: Router,
+    private ui: UiService
   ) { }
 
   ngOnInit() {
@@ -49,6 +51,7 @@ export class SimulatorComponent implements OnInit {
     });
   }
   newProject() {
+    this.ui.showLoading();
     this.loadCanvas = null;
     for (let key in window.scope) {
       window.scope[key] = [];
@@ -58,10 +61,12 @@ export class SimulatorComponent implements OnInit {
     this.projectId = -1;
     setTimeout(() => {
       this.reload = true;
+      this.ui.closeLoading();
     }, 1000)
   }
   saveProject(e: WorkspaceComponent, project) {
     if (!e || !project) return;
+    this.ui.showLoading();
     var saveObj = {};
     saveObj["canvas"] = e.save();
     for (let key in window.scope) {
@@ -73,22 +78,21 @@ export class SimulatorComponent implements OnInit {
     if (token) {
       if (this.projectId === -1)
         this.api.saveProject(project.value, JSON.stringify(saveObj), token).subscribe(v => {
+          let message = "Something Went Wrong";
           if (v["done"]) {
-            alert("done");
             this.router.navigate(
               ['.'],
               { relativeTo: this.activatedRoute, queryParams: { project: v['id'] } }
             );
+            message = "Done";
           }
-          else
-            alert("Not done");
+          this.ui.closeLoading();
+          alert(message);
         });
       else {
         this.api.updateProject(this.projectId + '', project.value, JSON.stringify(saveObj), token).subscribe(v => {
-          if (v["done"])
-            alert("done");
-          else
-            alert("Not done");
+          this.ui.closeLoading();
+          alert((v["done"]?"Done":"Something Went Wrong"))
         });
       }
     }
