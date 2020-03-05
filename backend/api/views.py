@@ -38,8 +38,8 @@ class ProjectSave(APIView):
         request.data._mutable = _mutable
         serializer = ProjectSaveSerializer(data=request.data)
         if serializer.is_valid():
-            serializer.save()
-            return Response({"done": True})
+            x = serializer.save()
+            return Response({"done": True,"id":x.id})
         return Response({"done": False})
 
 

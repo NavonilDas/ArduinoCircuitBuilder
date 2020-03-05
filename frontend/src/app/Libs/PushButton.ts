@@ -84,8 +84,14 @@ export class PushButton {
         this.id = data.id;
     }
     // returns node pointer on basis of x,y position
-    getNode(x: number, y: number) {
-
+    getNode(point:any):Point {
+        for(var t of this.nodes){
+            console.table([point,t.position()])
+            if(point[0] - 2 == t.x && point[1] == t.y){
+                return t;
+            }
+        }
+        return null;
     }
 }
 window["PushButton"] = PushButton;

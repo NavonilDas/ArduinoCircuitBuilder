@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { WorkspaceComponent } from '../workspace/workspace.component';
 import { ApiService } from '../api.service';
 declare var window;
@@ -12,9 +12,14 @@ declare var window;
 export class SimulatorComponent implements OnInit {
   projectId: number = -1;
   loadCanvas: any = null;
-  title:string = "Untitled";
+  title: string = "Untitled";
+  reload: boolean = true;
 
-  constructor(private activatedRoute: ActivatedRoute, private api: ApiService) { }
+  constructor(
+    private activatedRoute: ActivatedRoute,
+    private api: ApiService,
+    private router: Router
+  ) { }
 
   ngOnInit() {
     this.activatedRoute.queryParams.subscribe(p => {
@@ -36,15 +41,27 @@ export class SimulatorComponent implements OnInit {
   }
   loadProject() {
     var token = window.localStorage.getItem("Token");
-    this.api.getProject(this.projectId, token).subscribe((v:any) => {
+    this.api.getProject(this.projectId, token).subscribe((v: any) => {
       //Update title
       this.title = v.title;
       // Update canvas and add Circuit Elements
       this.loadCanvas = JSON.parse(v["data"]);
-      // console.log(v);
     });
   }
+  newProject() {
+    this.loadCanvas = null;
+    for (let key in window.scope) {
+      window.scope[key] = [];
+    }
+    this.title = "Untitled";
+    this.reload = false;
+    this.projectId = -1;
+    setTimeout(() => {
+      this.reload = true;
+    }, 1000)
+  }
   saveProject(e: WorkspaceComponent, project) {
+    if (!e || !project) return;
     var saveObj = {};
     saveObj["canvas"] = e.save();
     for (let key in window.scope) {
@@ -56,8 +73,13 @@ export class SimulatorComponent implements OnInit {
     if (token) {
       if (this.projectId === -1)
         this.api.saveProject(project.value, JSON.stringify(saveObj), token).subscribe(v => {
-          if (v["done"])
+          if (v["done"]) {
             alert("done");
+            this.router.navigate(
+              ['.'],
+              { relativeTo: this.activatedRoute, queryParams: { project: v['id'] } }
+            );
+          }
           else
             alert("Not done");
         });

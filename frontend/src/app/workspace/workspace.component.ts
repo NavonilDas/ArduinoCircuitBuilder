@@ -256,23 +256,34 @@ export class WorkspaceComponent implements OnInit {
       obj.load(data);
   }
 
-  loadWires(wires:any[]){
-    for(let w of wires){
-      let start = null,end = null;
-      for(let st of window.scope[w.start.keyName]){
-        if(st.id == w.start.id){
-          start = st;
+  loadWires(wires: any[]) {
+    for (let w of wires) {
+      let points = w.points;
+      let start = null, end = null;
+      for (let st of window.scope[w.start.keyName]) {
+        if (st.id == w.start.id) {
+          start = st.getNode(points[0]);
           break;
         }
       }
 
-      for(let en of window.scope[w.end.keyName]){
-        if(en.id == w.end.id){
-          end = en;
+      for (let en of window.scope[w.end.keyName]) {
+        if (en.id == w.end.id) {
+          end = en.getNode(points[points.length - 1]);
           break;
         }
       }
-      console.log([start.getNode(),end])
+      if (start && end) {
+        var tmp = new Wire(this.canvas, start)
+        tmp.load(w);
+        tmp.connect(end, true);
+        console.log("called")
+        window["scope"]["wires"].push(tmp);
+        tmp.update();
+      }else{
+        alert("Something went wrong")
+      }
+      console.log([start, end])
     }
   }
 }

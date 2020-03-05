@@ -89,8 +89,8 @@ export class Led {
         this.id = data.id;
     }
     // returns node pointer on basis of x,y position
-    getNode(x: number, y: number) {
-
+    getNode(point:any) {
+        return point
     }
 }
 window["Led"] = Led;
