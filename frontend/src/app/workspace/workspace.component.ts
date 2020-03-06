@@ -4,6 +4,7 @@ import { Wire } from 'src/app/Libs/Wire';
 import { Led } from 'src/app/Libs/Led';
 import { PushButton } from 'src/app/Libs/PushButton';
 import { Buzzer } from 'src/app/Libs/Buzzer';
+import { UiService } from '../ui.service';
 
 declare var Raphael: any;
 declare var window: any;
@@ -53,7 +54,7 @@ export class WorkspaceComponent implements OnInit {
     }
   }
 
-  constructor() { }
+  constructor(private ui: UiService) { }
 
   ngOnInit() {
     Raphael.fn.showPopup = function (label, x, y) {
@@ -96,7 +97,11 @@ export class WorkspaceComponent implements OnInit {
     else
       this.zoomin();
   }
-
+  @HostListener('dblclick', ['$event']) onDblClick(evt) {
+    window.hideProperties();
+    window["isSelected"] = false;
+    window["Selected"] = null;
+  }
   @HostListener('mousedown', ['$event']) onMouseDown(evt: MouseEvent) {
     let event = this.relativePos(evt);
 
@@ -111,8 +116,7 @@ export class WorkspaceComponent implements OnInit {
     } else {
       if (window["Selected"] && window["Selected"].deselect)
         window["Selected"].deselect();
-        window["isSelected"] = false;
-        window.hideProperties();
+      window["isSelected"] = false;
     }
   }
 
@@ -214,6 +218,7 @@ export class WorkspaceComponent implements OnInit {
 
   delete() {
     if (window["Selected"]) {
+      this.ui.showLoading();
       window["Selected"].remove();
       if (window["Selected"] instanceof Wire) {
         window.scope.wires.splice(window.Selected.id, 1);
@@ -223,6 +228,15 @@ export class WorkspaceComponent implements OnInit {
       }
       window["isSelected"] = false;
       window["Selected"] = null;
+      window.hideProperties();
+      /// Change id of objects
+      for (let key in window.scope) {
+        for (let i = 0; i < window.scope[key].length; i++) {
+          if (window.scope[key][i].id)
+            window.scope[key][i].id = i;
+        }
+      }
+      this.ui.closeLoading();
     }
   }
 

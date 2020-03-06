@@ -1,16 +1,17 @@
 import { Point } from './Point';
+import { CircuitElement } from './CircuitElement';
 
 declare var window;
 
-export class PushButton {
-    id:number;
+export class PushButton extends CircuitElement {
+    id: number;
     elements: any[];
     nodes: Point[];
     tmpx: number = 0;
     tmpy: number = 0;
-    keyName: string = "PushButton";
 
     constructor(private canvas: any, public x: number, public y: number) {
+        super("PushButton");
         this.id = window.scope["PushButton"].length;
         this.elements = [
             this.canvas.rect(x + 10, y - 20, 5, 30, 5),
@@ -25,18 +26,23 @@ export class PushButton {
             this.canvas.circle(x + 30, y + 30, 12)
         ];
         this.nodes = [
-            new Point(canvas, x + 10, y - 20, "Terminal 1b",this),
-            new Point(canvas, x + 45, y - 20, "Terminal 2b",this),
-            new Point(canvas, x + 10, y + 80, "Terminal 1a",this),
-            new Point(canvas, x + 45, y + 80, "Terminal 2a",this)
+            new Point(canvas, x + 10, y - 20, "Terminal 1b", this),
+            new Point(canvas, x + 45, y - 20, "Terminal 2b", this),
+            new Point(canvas, x + 10, y + 80, "Terminal 1a", this),
+            new Point(canvas, x + 45, y + 80, "Terminal 2a", this)
         ];
         for (let i = 0; i < 4; ++i)
             this.elements[i].attr({ stroke: "#737373", fill: "#737373" });
         this.elements[4].attr({ stroke: "#969696", fill: "#bfbfbf" });
         for (let i = 5; i < 10; ++i)
             this.elements[i].attr({ fill: "#383838", stroke: "#383838" });
-            
-        for (let i = 0; i < this.elements.length; ++i)
+
+        for (let i = 0; i < this.elements.length; ++i) {
+            this.elements[i].click(() => {
+                window["isSelected"] = true;
+                window["Selected"] = this;
+            });
+
             this.elements[i].drag((dx, dy) => {
                 let del_x = (dx - this.tmpx), del_y = (dy - this.tmpy);
                 for (let i = 0; i < this.elements.length; ++i) {
@@ -70,8 +76,14 @@ export class PushButton {
                 this.x = attr.x - 10;
                 this.y = attr.y + 20;
             });
+        }
 
 
+    }
+    remove() {
+        for (let e of this.elements) {
+            e.remove();
+        }
     }
     save() {
         return {
@@ -80,14 +92,14 @@ export class PushButton {
             id: this.id
         };
     }
-    load(data){
+    load(data) {
         this.id = data.id;
     }
     // returns node pointer on basis of x,y position
-    getNode(point:any):Point {
-        for(var t of this.nodes){
-            console.table([point,t.position()])
-            if(point[0] - 2 == t.x && point[1] == t.y){
+    getNode(point: any): Point {
+        for (var t of this.nodes) {
+            console.table([point, t.position()])
+            if (point[0] - 2 == t.x && point[1] == t.y) {
                 return t;
             }
         }

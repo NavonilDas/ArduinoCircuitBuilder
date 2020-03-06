@@ -1,10 +1,10 @@
 import { Point } from './Point';
+import { CircuitElement } from './CircuitElement';
 
 declare var window;
 
-export class Arduino {
+export class Arduino extends CircuitElement{
     id: number;
-    keyName: string = "Arduino";
     element: any;
     glowing: any;
     Nodes: Point[] = [];
@@ -22,6 +22,7 @@ export class Arduino {
         color: "#286bad"
     };
     constructor(private canvas: any, public x: number, public y: number) {
+        super("Arduino");
         this.id = window.scope["Arduino"].length;
         this.element = this.canvas.image("assets/images/ArduinoUno.svg", this.x, this.y, 228, 167);
         this.draw();
