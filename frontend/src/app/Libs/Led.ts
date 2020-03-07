@@ -4,7 +4,6 @@ import { CircuitElement } from './CircuitElement';
 declare var window;
 
 export class Led extends CircuitElement {
-    id: number;
     points: any[][] = [[0, 85], [0, 50], [50, 85]];
     tags: string[] = ["M", "L", "a25,25 180 0,1 50,0 L"];
     color: string = "#f00";
@@ -43,12 +42,6 @@ export class Led extends CircuitElement {
         this.body.click(() => {
             window["isSelected"] = true;
             window["Selected"] = this;
-
-            var x = document.createElement("button");
-            x.onclick = () => {
-                this.somefunc();
-            }
-            x.innerText = "Hello world";
             if (window.showProperties) {
                 window.showProperties(() => {
                     return this.properties();

@@ -12,7 +12,6 @@ export class Buzzer extends CircuitElement{
     inner: any;
     tmpx: number;
     tmpy: number;
-    id: number;
 
     constructor(private canvas: any, public x: number, public y: number) {
         super("Buzzer");

@@ -1,17 +1,17 @@
 import { Point } from './Point';
+import { CircuitElement } from './CircuitElement';
 
 declare var window;
 
-export class Wire {
-    id: number;
-    keyName: string = "wires";
+export class Wire extends CircuitElement {
     points: number[][] = [];
     value: number = -1;
     end: Point = null;
     element: any;
-    color:any = "#000";
+    color: any = "#000";
 
     constructor(public canvas, public start: Point) {
+        super("wire");
         this.id = window.scope["wires"].length;
         this.points.push(start.position());
     }
@@ -40,7 +40,35 @@ export class Wire {
     handleClick() {
         window["isSelected"] = true;
         window["Selected"] = this;
-        console.log(this.value);
+        // console.log(this.value);
+        if (window.showProperties) {
+            window.showProperties(() => {
+                return this.properties();
+            })
+        }
+    }
+    setColor(color: string) {
+        this.color = color;
+        this.element.attr({ "stroke": color });
+    }
+    properties() {
+        let body = document.createElement('div');
+        body.innerHTML = "<h6>Wire</h6><label>Color:</label><br>";
+        let select = document.createElement("select");
+        select.innerHTML = `<option>Black</option><option>Red</option><option>Yellow</option><option>Blue</option><option>Green</option>`;
+        let colors = ["#000","#ff0000", "#ffff00", "#2593fa", "#31c404"];
+        for (let i = 0; i < colors.length; ++i)
+            if (colors[i] == this.color)
+                select.selectedIndex = i;
+        select.onchange = () => {
+            this.setColor(colors[select.selectedIndex]);
+        }
+        body.append(select);
+        return {
+            key: this.keyName,
+            uid: this.id,
+            elem: body
+        }
     }
     connect(t: Point, removeLast: boolean = false) {
         if (removeLast && this.points.length > 2) {
@@ -76,24 +104,24 @@ export class Wire {
             this.element.click(() => {
                 this.handleClick();
             });
-            this.element.attr({ "stroke-linecap": "round", "stroke-width": "4" });
+            this.element.attr({ "stroke-linecap": "round", "stroke-width": "4", "stroke": this.color });
 
         }
     }
     deselect() {
-        console.log("called");
+        // console.log("called");
     }
     save() {
         return {
-            points:this.points,
-            color:this.color,
-            start:{
-                id:this.start.parent.id,
-                keyName:this.start.parent.keyName
+            points: this.points,
+            color: this.color,
+            start: {
+                id: this.start.parent.id,
+                keyName: this.start.parent.keyName
             },
-            end:{
-                id:this.end.parent.id,
-                keyName:this.end.parent.keyName
+            end: {
+                id: this.end.parent.id,
+                keyName: this.end.parent.keyName
             }
         };
     }
@@ -103,6 +131,9 @@ export class Wire {
     }
     remove() {
         this.element.remove();
+    }
+    getNode(p: number[]) {
+        return null;
     }
 }
 window["Wire"] = Wire;

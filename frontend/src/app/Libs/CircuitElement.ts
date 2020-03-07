@@ -5,6 +5,7 @@ import { Point } from './Point';
  */
 export abstract class CircuitElement {
     public keyName: string;
+    public id:number;
     // isSimulating:boolean;
     constructor(keyName: string) {
         this.keyName = keyName;

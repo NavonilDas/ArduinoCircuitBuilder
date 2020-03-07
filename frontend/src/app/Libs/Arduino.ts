@@ -4,7 +4,6 @@ import { CircuitElement } from './CircuitElement';
 declare var window;
 
 export class Arduino extends CircuitElement{
-    id: number;
     element: any;
     glowing: any;
     Nodes: Point[] = [];

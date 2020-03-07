@@ -4,7 +4,6 @@ import { CircuitElement } from './CircuitElement';
 declare var window;
 
 export class PushButton extends CircuitElement {
-    id: number;
     elements: any[];
     nodes: Point[];
     tmpx: number = 0;
