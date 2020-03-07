@@ -217,6 +217,7 @@ export class WorkspaceComponent implements OnInit {
   }
 
   delete() {
+    /// TODO: Implement Recursive way to remove memory
     if (window["Selected"]) {
       this.ui.showLoading();
       window["Selected"].remove();
@@ -224,7 +225,11 @@ export class WorkspaceComponent implements OnInit {
         window.scope.wires.splice(window.Selected.id, 1);
       } else {
         let key = window["Selected"].keyName;
-        window.scope[key].splice(window["Selected"].id, 1);
+        let temp = window.scope[key].splice(window["Selected"].id, 1);
+        // for(let xx in temp[0]){
+        //   console.log(xx)
+        // }
+        delete temp[0];
       }
       window["isSelected"] = false;
       window["Selected"] = null;
@@ -237,6 +242,8 @@ export class WorkspaceComponent implements OnInit {
         }
       }
       this.ui.closeLoading();
+    }else{
+      this.ui.showToast("No Component is Selected");
     }
   }
 

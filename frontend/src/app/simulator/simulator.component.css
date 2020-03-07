@@ -54,3 +54,17 @@
     box-shadow: 2px 2px 9px rgba(0, 0, 0, 0.4);
     padding: 15px;
 }
+
+#toast-box{
+    position: fixed;
+    z-index: 100;
+    bottom: 50px;
+    padding: 5px 15px 5px 15px;
+    max-width: 40%;
+    color: #fff;
+    min-height: 30px;
+    background: rgba(0, 0, 0, 0.7);
+    transition: opacity 1s ease-in-out;
+    user-select: none;
+    opacity: 0;
+}

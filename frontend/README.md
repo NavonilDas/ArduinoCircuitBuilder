@@ -15,8 +15,10 @@ window.showProperties -> Display Property Box
 ## TODO
 
 - [ ] On Select Element Show Properties
-- [ ] Show Toast message
+- [X] Show Toast message
 - [ ] Custom Alert Boxes
+- [ ] Delete Wires on deleting a component
+- [ ] Recursively Delete object (Save Memory)
 - [ ] Change Color of Wire
 - [ ] Add Breadboard
 - [ ] Custom Context Menu for Copy

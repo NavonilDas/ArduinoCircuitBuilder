@@ -24,14 +24,14 @@ export class SimulatorComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-    window.showProperties = (callback)=>{
+    window.showProperties = (callback) => {
       var tmp = callback();
-      this.ui.addProperty(tmp.key,tmp.id,tmp.elem);
+      this.ui.addProperty(tmp.key, tmp.id, tmp.elem);
     }
-    window.hideProperties = ()=>{
+    window.hideProperties = () => {
       this.ui.hideProperty();
     }
-    
+
     this.activatedRoute.queryParams.subscribe(p => {
       if (p.project) {
         this.projectId = p.project;
@@ -98,12 +98,21 @@ export class SimulatorComponent implements OnInit {
           }
           this.ui.closeLoading();
           alert(message);
+        }, (err) => {
+          this.ui.closeLoading();
+          alert("Something Went Wrong");
+          console.log(err);
         });
       else {
         this.api.updateProject(this.projectId + '', project.value, JSON.stringify(saveObj), token).subscribe(v => {
           this.ui.closeLoading();
-          alert((v["done"]?"Done":"Something Went Wrong"))
+          alert((v["done"] ? "Done" : "Something Went Wrong"))
+        }, (err) => {
+          this.ui.closeLoading();
+          alert("Something Went Wrong");
+          console.log(err);
         });
+        
       }
     }
     else

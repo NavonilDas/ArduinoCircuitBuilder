@@ -21,22 +21,32 @@ export class UiService {
     el.style.display = "none";
   }
 
-  addProperty(key:string,id:string,elem:any){
+  addProperty(key: string, id: string, elem: any) {
     var body = document.getElementById("properties-box");
-    if(body.getAttribute("name") == key && body.getAttribute("uid") == id) return;
-    body.setAttribute("name",key);
-    body.setAttribute("uid",id);
+    if (body.getAttribute("name") == key && body.getAttribute("uid") == id) return;
+    body.setAttribute("name", key);
+    body.setAttribute("uid", id);
     body.style.display = "block";
     // Clear Body
-    while(body.childNodes.length > 1){
+    while (body.childNodes.length > 1) {
       body.removeChild(body.lastChild);
     }
     body.append(elem);
   }
-  hideProperty(){
+  hideProperty() {
     var body = document.getElementById("properties-box");
     body.style.display = "none";
-    body.setAttribute("name","null");
-    body.setAttribute("uid","-1");
+    body.setAttribute("name", "null");
+    body.setAttribute("uid", "-1");
+  }
+  showToast(message: string) {
+    let box = document.getElementById("toast-box");
+    box.style.visibility = "visible"
+    box.style.opacity = "1";
+    box.children[0].innerHTML = message;
+    setTimeout(() => {
+      box.style.opacity = "0";
+      box.style.visibility = "hidden"
+    }, 3000);
   }
 }

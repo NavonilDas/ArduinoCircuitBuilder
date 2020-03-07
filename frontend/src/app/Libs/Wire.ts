@@ -40,7 +40,7 @@ export class Wire extends CircuitElement {
     handleClick() {
         window["isSelected"] = true;
         window["Selected"] = this;
-        // console.log(this.value);
+
         if (window.showProperties) {
             window.showProperties(() => {
                 return this.properties();
@@ -105,8 +105,8 @@ export class Wire extends CircuitElement {
                 this.handleClick();
             });
             this.element.attr({ "stroke-linecap": "round", "stroke-width": "4", "stroke": this.color });
-
         }
+        // console.log([this.start,this.end])
     }
     deselect() {
         // console.log("called");
