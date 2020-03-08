@@ -28,7 +28,7 @@ export class UiService {
     body.setAttribute("uid", id);
     body.style.display = "block";
     // Clear Body
-    while (body.childNodes.length > 1) {
+    while (body.childNodes.length > 0) {
       body.removeChild(body.lastChild);
     }
     body.append(elem);

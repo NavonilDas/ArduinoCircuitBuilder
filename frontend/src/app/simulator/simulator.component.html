@@ -1,11 +1,11 @@
-<div  *ngIf="reload">
+<div *ngIf="reload">
   <div style="background: #fff;padding: 5px;">
     <input #project_name type="text" name="title" value={{title}} id="project_title" (focusout)="onFocusOut($event)">
-    <button  routerLink="/" (click)="newProject()" class="btn">New</button>
-    <button  routerLink="/open" class="btn">Open</button>
+    <button routerLink="/" (click)="newProject()" class="btn">New</button>
+    <button routerLink="/open" class="btn">Open</button>
     <button class="btn" (click)="saveProject(workspace,project_name)">Save</button>
   </div>
-  <div style="display: flex;position: absolute;top:50px;" onkeydown="return false;">
+  <div style="display: flex;position: absolute;top:50px;">
     <div>
       <app-workspace #workspace [canvasData]="loadCanvas"></app-workspace>
     </div>
@@ -22,7 +22,6 @@
 </div>
 
 <div id="properties-box" name="null" uid="-1">
-  <h5>Properties</h5>
 </div>
 
 <div id="toast-box">

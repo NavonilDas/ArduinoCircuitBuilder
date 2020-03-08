@@ -3,7 +3,7 @@ import { CircuitElement } from './CircuitElement';
 
 declare var window;
 
-export class Arduino extends CircuitElement{
+export class Arduino extends CircuitElement {
     element: any;
     glowing: any;
     Nodes: Point[] = [];
@@ -33,6 +33,11 @@ export class Arduino extends CircuitElement{
         this.element.click(() => {
             window["isSelected"] = true;
             window["Selected"] = this;
+            if (window.showProperties) {
+                window.showProperties(() => {
+                    return this.properties();
+                })
+            }
         });
         this.element.drag((dx, dy) => {
             this.glowing.remove();
@@ -82,8 +87,14 @@ export class Arduino extends CircuitElement{
             point.hide();
         }
     }
-    scale(value: number) {
-
+    properties() {
+        let body = document.createElement("div");
+        body.innerHTML = "<h6>Arduino</h6>";
+        return {
+            key:this.keyName,
+            uid:this.id,
+            elem:body
+        }
     }
     remove() {
         console.log("called");
@@ -102,15 +113,15 @@ export class Arduino extends CircuitElement{
             id: this.id
         };
     }
-    load(data){
+    load(data) {
         this.x = data.x;
         this.y = data.y;
         this.id = data.id;
     }
     // returns node on basis of x,y position
-    getNode(point:number[]):Point {
-        for(let n of this.Nodes){
-            if(point[0] - 2 == n.x && point[1] - 2 == n.y)
+    getNode(point: number[]): Point {
+        for (let n of this.Nodes) {
+            if (point[0] - 2 == n.x && point[1] - 2 == n.y)
                 return n;
         }
         return null;

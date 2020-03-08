@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, HostListener } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { WorkspaceComponent } from '../workspace/workspace.component';
 import { ApiService } from '../api.service';
@@ -43,7 +43,8 @@ export class SimulatorComponent implements OnInit {
     { name: "Arduino", obj: "Arduino", img: "arduino.JPG" },
     { name: "Buzzer", obj: "Buzzer", img: "Buzzer.JPG" },
     { name: "Push Button", obj: "PushButton", img: "pushButton.JPG" },
-    { name: "LED", obj: "Led", img: "led.JPG" }
+    { name: "LED", obj: "Led", img: "led.JPG" },
+    { name: "Breadboard", obj: "Breadboard", img: "led.JPG" }
   ];
   test(eve, x) {
     eve.dataTransfer.setData("text", x);

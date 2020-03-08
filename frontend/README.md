@@ -14,8 +14,10 @@ window.showProperties -> Display Property Box
 
 ## TODO
 
-- [ ] On Select Element Show Properties
+- [X] On Select Element Show Properties
 - [X] Show Toast message
+- [ ] Add points on the wire
+- [ ] Improve Property Box
 - [ ] Custom Alert Boxes
 - [ ] Delete Wires on deleting a component
 - [ ] Recursively Delete object (Save Memory)

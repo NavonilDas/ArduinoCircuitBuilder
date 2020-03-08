@@ -40,6 +40,11 @@ export class PushButton extends CircuitElement {
             this.elements[i].click(() => {
                 window["isSelected"] = true;
                 window["Selected"] = this;
+                if (window.showProperties) {
+                    window.showProperties(() => {
+                        return this.properties();
+                    })
+                }
             });
 
             this.elements[i].drag((dx, dy) => {
@@ -76,8 +81,15 @@ export class PushButton extends CircuitElement {
                 this.y = attr.y + 20;
             });
         }
-
-
+    }
+    properties() {
+        let body = document.createElement("div");
+        body.innerHTML = "<h6>Push Button</h6>";
+        return {
+            key: this.keyName,
+            uid: this.id,
+            elem: body
+        };
     }
     remove() {
         for (let e of this.elements) {

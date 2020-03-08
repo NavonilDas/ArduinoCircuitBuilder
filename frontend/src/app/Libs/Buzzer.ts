@@ -3,7 +3,7 @@ import { CircuitElement } from './CircuitElement';
 
 declare var window;
 
-export class Buzzer extends CircuitElement{
+export class Buzzer extends CircuitElement {
     leg_plus: any;
     leg_neg: any;
     leg_p: Point;
@@ -32,9 +32,14 @@ export class Buzzer extends CircuitElement{
         this.leg_p = new Point(canvas, x - 17, y + 48, "POSITIVE", this);
         this.leg_n = new Point(canvas, x + 13, y + 48, "NEGATIVE", this);
 
-        this.outer.click(()=>{
+        this.outer.click(() => {
             window["isSelected"] = true;
             window["Selected"] = this;
+            if (window.showProperties) {
+                window.showProperties(() => {
+                    return this.properties();
+                })
+            }
         });
 
         this.outer.drag((dx, dy) => {
@@ -56,6 +61,15 @@ export class Buzzer extends CircuitElement{
             this.x = this.tmpx;
             this.y = this.tmpy;
         });
+    }
+    properties() {
+        let body = document.createElement("div");
+        body.innerHTML = "<h6>Buzzer</h6>";
+        return {
+            key: this.keyName,
+            uid: this.id,
+            elem: body
+        };
     }
     remove(): void {
         this.leg_neg.remove();

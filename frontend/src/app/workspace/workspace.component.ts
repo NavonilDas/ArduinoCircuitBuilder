@@ -5,6 +5,7 @@ import { Led } from 'src/app/Libs/Led';
 import { PushButton } from 'src/app/Libs/PushButton';
 import { Buzzer } from 'src/app/Libs/Buzzer';
 import { UiService } from '../ui.service';
+import { Breadboard } from '../Libs/Breadboard';
 
 declare var Raphael: any;
 declare var window: any;
@@ -33,7 +34,8 @@ export class WorkspaceComponent implements OnInit {
     'Buzzer': Buzzer,
     'Led': Led,
     'Arduino': Arduino,
-    'PushButton': PushButton
+    'PushButton': PushButton,
+    'Breadboard': Breadboard
   };
   tmpx: number;
   tmpy: number;
@@ -57,6 +59,8 @@ export class WorkspaceComponent implements OnInit {
   constructor(private ui: UiService) { }
 
   ngOnInit() {
+    window.addEventListener("keyup", (evt: any) => { return this.onkeyUp(evt); });
+
     Raphael.fn.showPopup = function (label, x, y) {
       if (label == "") return;
       var ele = document.getElementById("bubblebox");
@@ -150,6 +154,16 @@ export class WorkspaceComponent implements OnInit {
     return false;
   }
 
+  onkeyUp(evt: any) {
+    evt.preventDefault();
+    if (evt.target.tagName.toUpperCase() == "INPUT")
+      return false;
+
+    if (evt.key == "Delete" || evt.key == "Backspace")
+      this.delete();
+    return false;
+  }
+
   /**
    * Adds Circuit Element to the canvas
    * @param key Elements Key name
@@ -212,7 +226,7 @@ export class WorkspaceComponent implements OnInit {
 
   holdClick(e: HTMLElement) {
     e.classList.toggle('active-btn');
-    console.log(e)
+    // console.log(e)
     this.hold_clicked = !this.hold_clicked;
   }
 
@@ -242,7 +256,7 @@ export class WorkspaceComponent implements OnInit {
         }
       }
       this.ui.closeLoading();
-    }else{
+    } else {
       this.ui.showToast("No Component is Selected");
     }
   }
