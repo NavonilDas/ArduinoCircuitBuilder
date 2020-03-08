@@ -9,8 +9,8 @@ import { Breadboard } from '../Libs/Breadboard';
 
 declare var Raphael: any;
 declare var window: any;
-const initWidth: number = 1000;
-const initHeight: number = 1000;
+const initWidth: number = 1100;
+const initHeight: number = 1100;
 
 @Component({
   selector: 'app-workspace',
@@ -103,6 +103,7 @@ export class WorkspaceComponent implements OnInit {
   }
   @HostListener('dblclick', ['$event']) onDblClick(evt) {
     window.hideProperties();
+    if(window["Selected"] instanceof Wire) return;
     window["isSelected"] = false;
     window["Selected"] = null;
   }

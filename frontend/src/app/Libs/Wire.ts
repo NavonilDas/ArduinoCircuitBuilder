@@ -106,10 +106,8 @@ export class Wire extends CircuitElement {
             });
             this.element.attr({ "stroke-linecap": "round", "stroke-width": "4", "stroke": this.color });
         }
-        // console.log([this.start,this.end])
     }
     deselect() {
-        // console.log("called");
     }
     save() {
         return {

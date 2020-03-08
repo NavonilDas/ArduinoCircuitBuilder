@@ -11,6 +11,8 @@ export class Point {
         fill: "rgba(255,0,0,1)",
         stroke: "rgba(0,0,0,1)"
     };
+    hoverCallback: any = null;
+    hoverCloseCallback: any = null;
     constructor(
         private canvas: any,
         public x: number,
@@ -23,8 +25,12 @@ export class Point {
         this.element.attr(this.defaultAttr);
 
         this.element.hover(() => {
+            if (this.hoverCallback)
+                this.hoverCallback(this.x,this.y);
             this.element.attr(this.nodeAttr);
         }, () => {
+            if (this.hoverCloseCallback)
+                this.hoverCloseCallback(this.x,this.y);
             this.element.attr(this.defaultAttr);
         });
         this.element.mouseover((evt: MouseEvent) => {
@@ -84,7 +90,19 @@ export class Point {
             y: this.y
         });
     }
+    relativeMove(dx: number, dy: number) {
+        this.x += dx;
+        this.y += dy;
+        this.element.attr({
+            x: this.x,
+            y: this.y
+        });
+    }
     position() {
         return [this.x + 2, this.y + 2];
+    }
+    setHoverCallback(callback = null, closeCallback = null) {
+        this.hoverCallback = callback;
+        this.hoverCloseCallback = closeCallback;
     }
 }
