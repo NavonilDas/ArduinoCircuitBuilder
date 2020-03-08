@@ -44,7 +44,7 @@ export class SimulatorComponent implements OnInit {
     { name: "Buzzer", obj: "Buzzer", img: "Buzzer.JPG" },
     { name: "Push Button", obj: "PushButton", img: "pushButton.JPG" },
     { name: "LED", obj: "Led", img: "led.JPG" },
-    { name: "Breadboard", obj: "Breadboard", img: "led.JPG" }
+    { name: "Breadboard", obj: "Breadboard", img: "Breadboard.JPG" }
   ];
   test(eve, x) {
     eve.dataTransfer.setData("text", x);
