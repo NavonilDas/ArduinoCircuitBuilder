@@ -24,10 +24,10 @@ export class Wire extends CircuitElement {
         this.points.push(start.position());
     }
     /**
-     *  
-     * @param x 
-     * @param y 
-     * @param scale 
+     *  Draws wire on the canvas
+     * @param x x position of point
+     * @param y y position of point
+     * @param scale Canvas scale
      */
     draw(x: number, y: number, scale: number = 1) {
         // remove the wire

@@ -20,9 +20,9 @@ import { WorkspaceComponent } from './workspace/workspace.component';
   ],
   imports: [
     BrowserModule,
-    AppRoutingModule,
-    HttpClientModule,
-    FormsModule
+    AppRoutingModule, // For Routes
+    HttpClientModule, // For Request
+    FormsModule // For Forms
   ],
   providers: [],
   bootstrap: [AppComponent]

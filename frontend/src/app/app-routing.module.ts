@@ -5,9 +5,9 @@ import { SimulatorComponent } from './simulator/simulator.component';
 import { ProjectComponent } from './project/project.component';
 
 const routes: Routes = [
-  { path: "", component: SimulatorComponent },
-  { path: 'login', component: LoginComponent },
-  { path: 'open', component: ProjectComponent }
+  { path: "", component: SimulatorComponent }, // Default route ie. Simulator
+  { path: 'login', component: LoginComponent }, // Login Route 
+  { path: 'open', component: ProjectComponent } // Open Project route
 ];
 
 @NgModule({
