@@ -1,8 +1,11 @@
 import { Point } from './Point';
 import { CircuitElement } from './CircuitElement';
 
-declare var window;
+declare var window;// Declare window so that custom created function don't throw error
 
+/**
+ * Class for Breadboard
+ */
 export class Breadboard extends CircuitElement {
     Nodes: Point[] = [];
     element: any;

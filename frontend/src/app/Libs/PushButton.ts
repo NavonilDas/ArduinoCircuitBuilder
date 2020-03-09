@@ -1,7 +1,7 @@
 import { Point } from './Point';
 import { CircuitElement } from './CircuitElement';
 
-declare var window;
+declare var window;// Declare window so that custom created function don't throw error
 
 export class PushButton extends CircuitElement {
     elements: any[];

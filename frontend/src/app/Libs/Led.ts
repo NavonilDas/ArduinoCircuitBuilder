@@ -1,7 +1,7 @@
 import { Point } from './Point';
 import { CircuitElement } from './CircuitElement';
 
-declare var window;
+declare var window;// Declare window so that custom created function don't throw error
 
 export class Led extends CircuitElement {
     points: any[][] = [[0, 85], [0, 50], [50, 85]];

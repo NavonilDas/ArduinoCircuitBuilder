@@ -3,7 +3,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { WorkspaceComponent } from '../workspace/workspace.component';
 import { ApiService } from '../api.service';
 import { UiService } from '../ui.service';
-declare var window;
+declare var window;// Declare window so that custom created function don't throw error
 
 @Component({
   selector: 'app-simulator',
