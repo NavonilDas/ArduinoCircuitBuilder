@@ -9,6 +9,8 @@ export abstract class CircuitElement {
     // isSimulating:boolean;
     constructor(keyName: string) {
         this.keyName = keyName;
+        if(window["scope"][this.keyName])
+            this.id = window["scope"][this.keyName].length;
     }
     /**
      * Return Object Containing properties of Element

@@ -176,4 +176,5 @@ export class Arduino extends CircuitElement {
         return null;
     }
 }
+// Set class as Global
 window["Arduino"] = Arduino;
