@@ -7,13 +7,15 @@ declare var window; // Declare window so that custom created function don't thro
  */
 export class Arduino extends CircuitElement {
     element: any; // Body of Arduino
-    glowing: any; // 
+    glowing: any;
     Nodes: Point[] = []; // Stores all the Nodes of Arduino
     /// Cordinate of Nodes with respect to the body
     NodesCordinates = [
-        [91, 13], [99, 13], [106, 13], [113, 13], [120, 13], [127, 13], [135, 13], [142, 13], [154, 13], [161, 13], [168, 13],
+        [91, 13], [99, 13], [106, 13], [113, 13], [120, 13], [127, 13],
+        [135, 13], [142, 13], [154, 13], [161, 13], [168, 13],
         [175, 13], [182, 13], [189, 13], [197, 13], [204, 13],
-        [117, 150], [124, 150], [132, 150], [139, 150], [146, 150], [153, 150], [168, 150], [175, 150], [182, 150], [189, 150], [196, 150], [204, 150]
+        [117, 150], [124, 150], [132, 150], [139, 150], [146, 150], [153, 150],
+        [168, 150], [175, 150], [182, 150], [189, 150], [196, 150], [204, 150]
     ];
     // Label for each node
     pinLabesl: string[] = [
@@ -123,9 +125,9 @@ export class Arduino extends CircuitElement {
         let body = document.createElement("div");
         body.innerHTML = "<h6>Arduino</h6>";
         return {
-            key:this.keyName,
-            uid:this.id,
-            elem:body
+            key: this.keyName,
+            uid: this.id,
+            elem: body
         }
     }
     /**

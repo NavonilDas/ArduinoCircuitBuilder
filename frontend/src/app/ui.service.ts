@@ -53,13 +53,13 @@ export class UiService {
    * @param message message to be shown
    */
   showToast(message: string) {
-    let box = document.getElementById("toast-box");
-    box.style.visibility = "visible"
-    box.style.opacity = "1";
+    const box = document.getElementById("toast-box");
+    box.style.visibility = 'visible';
+    box.style.opacity = '1';
     box.children[0].innerHTML = message;
     setTimeout(() => {
-      box.style.opacity = "0";
-      box.style.visibility = "hidden"
+      box.style.opacity = '0';
+      box.style.visibility = 'hidden';
     }, 3000);
   }
 }
