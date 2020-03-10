@@ -13,7 +13,7 @@
       <label style="text-align: center;width: 100%;font-size: 1.5em;">Components</label>
       <div class="toolbox" draggable="true">
         <div *ngFor="let component of components">
-          <img src="../assets/images/{{component.img}}" draggable="true" (dragstart)="test($event,component.obj)">
+          <img src="../assets/images/{{component.img}}" draggable="true" (dragstart)="dragStart($event,component.obj)">
           {{component.name}}
         </div>
       </div>
