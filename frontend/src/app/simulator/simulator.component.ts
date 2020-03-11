@@ -77,6 +77,7 @@ export class SimulatorComponent implements OnInit {
     // Deselect object
     window["isSelected"] = false;
     window["Selected"] = null;
+    this.ui.hideProperty();
     this.loadCanvas = null; // Remove any saved canvas data
     // empty all the scope
     for (let key in window.scope) {

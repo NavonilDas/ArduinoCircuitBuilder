@@ -114,7 +114,8 @@ export class Breadboard extends CircuitElement {
     save() {
         return {
             x: this.x,
-            y: this.y
+            y: this.y,
+            id: this.id
         };
     }
     /**

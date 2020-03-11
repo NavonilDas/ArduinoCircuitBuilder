@@ -417,7 +417,7 @@ export class WorkspaceComponent implements OnInit {
         tmp.update(); // Update wire
       } else {
         // if start or end node not found then show this message
-        alert('Something went wrong');
+        // alert('Something went wrong');
       }
     }
   }

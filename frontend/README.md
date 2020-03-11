@@ -17,6 +17,7 @@ window.showProperties -> Display Property Box
 - [X] On Select Element Show Properties
 - [X] Show Toast message
 - [ ] Save Local and Autosave
+- [ ] Delete Exisiting Project
 - [ ] Add points on the wire
 - [ ] Improve Property Box
 - [ ] Custom Alert Boxes
