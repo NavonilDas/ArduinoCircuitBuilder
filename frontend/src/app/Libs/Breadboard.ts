@@ -75,7 +75,7 @@ export class Breadboard extends CircuitElement {
                 let tmpx = x + 10 + (i - 1) * 10,
                     tmpy = y + 45 + j * 10;
                 this.addPoint(tmpx, tmpy, String.fromCharCode(97 + j) + i);
-                this.addPoint(tmpx, tmpy + 80, String.fromCharCode(97 + j) + i);
+                this.addPoint(tmpx, tmpy + 80, String.fromCharCode(102 + j) + i);
             }
     }
     /**

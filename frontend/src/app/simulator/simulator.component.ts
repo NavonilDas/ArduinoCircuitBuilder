@@ -3,6 +3,8 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { WorkspaceComponent } from '../workspace/workspace.component';
 import { ApiService } from '../api.service';
 import { UiService } from '../ui.service';
+import { Title } from '@angular/platform-browser';
+import { from } from 'rxjs';
 declare var window;// Declare window so that custom created function don't throw error
 
 @Component({
@@ -27,7 +29,8 @@ export class SimulatorComponent implements OnInit {
     private activatedRoute: ActivatedRoute, // For retriving Query params
     private api: ApiService,
     private router: Router, // For redirect
-    private ui: UiService
+    private ui: UiService,
+    private titleService: Title // For changing title
   ) { }
 
   ngOnInit() {
@@ -47,6 +50,7 @@ export class SimulatorComponent implements OnInit {
         this.loadProject();
       }
     });
+    this.titleService.setTitle(this.title);
   }
   /**
    * Drag Start Callback
@@ -65,6 +69,7 @@ export class SimulatorComponent implements OnInit {
     this.api.getProject(this.projectId, token).subscribe((v: any) => {
       //Update title
       this.title = v.title;
+      this.titleService.setTitle(this.title);
       // Update canvas and add Circuit Elements
       this.loadCanvas = JSON.parse(v["data"]);
     });

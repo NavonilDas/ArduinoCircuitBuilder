@@ -27,9 +27,9 @@ export class ProjectComponent implements OnInit {
    * returns project id
    * @param item fetched from api
    */
-  getQuery(item:any) {
-    return {
-      project: `${item.id}`
-    };
-  }
+  // getQuery(item:any) {
+  //   return {
+  //     project: `${item.id}`
+  //   };
+  // }
 }

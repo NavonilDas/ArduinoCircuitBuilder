@@ -1,9 +1,10 @@
 <div *ngIf="message != null">{{message}}</div>
 <div *ngIf="already"> You Are already signed in.Visit Projects at <a routerLink="/open">Click Here</a> </div>
-<div *ngIf="!already">
-  <form #f="ngForm" (ngSubmit)="onSubmit(f,$event)" novalidate>
+<div *ngIf="!already" style="display: flex;width: 100%;height: 100%;">
+  <h1>User Login</h1>
+  <form #f="ngForm" (ngSubmit)="onSubmit(f,$event)" novalidate style="margin:auto auto;">
     <input #username ngModel type="text" name="username" id="username" placeholder="Username">
     <br><input #pass ngModel type="password" name="pass" id="pass" placeholder="********" required>
-    <br><input type="submit" value="Login">
+    <br><input type="submit" value="Login" style="width: 100%;">
   </form>
 </div>

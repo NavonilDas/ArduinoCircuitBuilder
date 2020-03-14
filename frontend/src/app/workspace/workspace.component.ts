@@ -388,6 +388,7 @@ export class WorkspaceComponent implements OnInit {
    * @param wires array of saved wire data
    */
   loadWires(wires: any[]) {
+    console.log("called")
     for (const w of wires) { // iterate over each wire data
       const points = w.points; // points of wire
       let start = null, end = null; // Store the nodes fetched
@@ -416,6 +417,7 @@ export class WorkspaceComponent implements OnInit {
         window['scope']['wires'].push(tmp);
         tmp.update(); // Update wire
       } else {
+        console.log([start,end]);
         // if start or end node not found then show this message
         // alert('Something went wrong');
       }
