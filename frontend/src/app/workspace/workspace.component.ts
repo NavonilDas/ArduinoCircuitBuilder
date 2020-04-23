@@ -74,7 +74,7 @@ export class WorkspaceComponent implements OnInit {
       ele.style.left = (x - ele.clientWidth / 2) + 'px';
       ele.style.top = (y + 15) + 'px';
     };
-    // Add a Canvas function to hide 
+    // Add a Canvas function to hide
     Raphael.fn.hidePopup = function() {
       const ele = document.getElementById('bubblebox');
       ele.style.display = 'none';
